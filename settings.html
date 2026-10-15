@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>EDS Page Switcher Settings</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
+    
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin: 10px 0 0 0;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .quick-setup {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .input-group {
+      margin-bottom: 15px;
+    }
+    
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 15px;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    .input-group input:focus {
+      outline: none;
+      border-color: #007cba;
+      box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.2);
+    }
+    
+    .example {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
+    }
+    
+    .button {
+      background: #007cba;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    
+    .button:hover {
+      background: #005a87;
+    }
+    
+    .button.secondary {
+      background: #6c757d;
+    }
+    
+    .button.secondary:hover {
+      background: #545b62;
+    }
+    
+    .button.danger {
+      background: #dc3545;
+    }
+    
+    .button.danger:hover {
+      background: #c82333;
+    }
+    
+    .mappings-list {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .mapping-item {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .mapping-item:hover {
+      background: #f8f9fa;
+    }
+    
+    .mapping-item:last-child {
+      border-bottom: none;
+    }
+    
+    .mapping-info {
+      flex: 1;
+    }
+    
+    .mapping-original {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .mapping-eds {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .mapping-actions {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .button.small {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+    
+    .status-message {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: none;
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .status-message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 2px solid #28a745;
+      box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+    }
+
+    .status-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #dc3545;
+      box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    
+    .help-text {
+      background: #e7f3ff;
+      border: 1px solid #b8daff;
+      border-radius: 4px;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #004085;
+    }
+
+    .quick-setup.add-more-active {
+      border: 2px solid #28a745;
+      box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+    }
+
+    .add-more-indicator {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      display: none;
+      font-weight: 500;
+    }
+
+    .add-more-indicator.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">🔄 Website Switcher Setup</h1>
+      <p class="subtitle">Switch between your old and new website versions instantly</p>
+    </div>
+
+    <div class="help-text">
+      <strong>📖 What does this do?</strong>
+      <br>
+      This extension helps you quickly jump between two versions of the same website:
+      <ul style="margin: 10px 0; padding-left: 20px;">
+        <li>✅ Your <strong>original website</strong> (the old one)</li>
+        <li>✅ Your <strong>new Adobe website</strong> (the .aem.page or .aem.live version)</li>
+      </ul>
+
+      <strong>🎯 How to set it up:</strong>
+      <ol style="margin: 10px 0; padding-left: 20px; line-height: 1.8;">
+        <li>Open a page from your <strong>old website</strong> in one browser tab</li>
+        <li>Open the <strong>same page</strong> from your new Adobe website in another tab</li>
+        <li>Copy both URLs and paste them below</li>
+        <li>Click the button - Done! The extension figures out the rest automatically ✨</li>
+      </ol>
+
+      <strong>💡 Example - Here's what to copy and paste:</strong>
+      <br>
+      <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 13px; border-left: 4px solid #007cba;">
+        <div style="margin-bottom: 8px;">
+          <strong style="color: #007cba;">📍 Old website URL:</strong><br>
+          <code style="background: #f5f5f5; padding: 4px 8px; border-radius: 3px; display: inline-block; margin-top: 4px;">https://www.mysite.com/about.html</code>
+        </div>
+        <div>
+          <strong style="color: #28a745;">🆕 New Adobe website URL:</strong><br>
+          <code style="background: #f5f5f5; padding: 4px 8px; border-radius: 3px; display: inline-block; margin-top: 4px;">https://main--mysite--company.aem.page/about</code>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">🚀 Step 1: Add Your Websites</div>
+      <div class="quick-setup" id="quickSetupForm">
+        <div class="add-more-indicator" id="addMoreIndicator">
+          ➕ Multiple Sites Mode - Keep adding more after each save
+        </div>
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="input-group">
+          <label for="sampleOriginalUrl">
+            <span style="font-size: 16px;">📍</span> Your Old Website URL
+          </label>
+          <input type="text" id="sampleOriginalUrl" placeholder="Example: https://www.mysite.com/products/item.html">
+          <div class="example">Copy and paste any page from your original website</div>
+        </div>
+
+        <div class="input-group">
+          <label for="sampleEdsUrl">
+            <span style="font-size: 16px;">🆕</span> Your New Adobe Website URL
+          </label>
+          <input type="text" id="sampleEdsUrl" placeholder="Example: https://main--mysite--company.aem.page/products/item">
+          <div class="example">Copy and paste the same page from your new Adobe website (.aem.page or .aem.live)</div>
+        </div>
+
+        <div class="input-group" style="margin-top: 10px;">
+          <label style="display: flex; align-items: center; cursor: pointer; user-select: none;">
+            <input type="checkbox" id="addMoreMode" style="width: auto; margin-right: 8px; cursor: pointer;">
+            <span>I want to add multiple websites one after another</span>
+          </label>
+          <div class="example">Check this box if you have more than one website to add - the form will stay open for you</div>
+        </div>
+
+        <button id="extractAndAdd" class="button" style="font-size: 15px; padding: 14px 20px;">
+          ✨ Connect These Websites
+        </button>
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">📋 Step 2: Your Connected Websites</div>
+      <p style="color: #666; font-size: 14px; margin-top: -10px; margin-bottom: 15px;">
+        These are the website pairs you've set up. You can switch between them instantly!
+      </p>
+      <div id="mappingsList" class="mappings-list">
+        <div class="empty-state">
+          No websites connected yet. Add your first pair above! 👆
+        </div>
+      </div>
+
+      <div style="margin-top: 15px;">
+        <button id="exportMappings" class="button secondary" title="Save all your website pairs to a file">
+          💾 Save to File
+        </button>
+        <button id="importMappings" class="button secondary" title="Load website pairs from a file">
+          📂 Load from File
+        </button>
+        <button id="clearAll" class="button danger" title="Remove all website pairs">
+          🗑️ Remove All
+        </button>
+        <input type="file" id="fileInput" accept=".json" style="display: none;">
+      </div>
+    </div>
+  </div>
+  
+  <script src="settings.js"></script>
+</body>
+</html>
